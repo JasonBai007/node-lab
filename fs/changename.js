@@ -1,36 +1,38 @@
 var fs = require('fs');
-var util = require('util');
 
-var oldPath = 'picpool'
-var newPath = 'targetfolder'
-
-// 修改单个文件的路径和名称
-// function changeOnePicName() {
-//     fs.rename(oldPath + '/top.jpg', newPath + '/aaa.jpg', function(err) {
-//         if (err) {
-//             throw err;
-//         }
-//         console.log('done!');
-//     })
-
-// }
-// changeOnePicName()
-
+gen_buddle('dgadf');
 
 // 列出文件夹下的全部文件信息
-function explorer(path) {
-    fs.readdir(path, function(err, files) {
-        //err 为错误 , files 文件名列表包含文件夹与文件
+function gen_buddle(name) {
+
+    // 读取src文件夹下面的所有文件
+    fs.readdir(__dirname + '/src', function(err, files) {
+
+        // 处理异常
         if (err) {
             console.log('error:\n' + err);
             return;
         }
 
-        files.forEach(function(file) {
-            console.log('文件名:' + path + '/' + file);
+        // 必须先创建目标文件夹路径，否则在下一步会抛出错误
+        fs.mkdir(__dirname + '/dist/' + name, function(err) {
+            if (err)
+                throw err;
+            console.log('厉害了，白总！创建目录成功！')
         });
 
+        // 循环处理读到的这些文件，重命名并移动
+        files.forEach(function(file, index) {
+            var src = __dirname + '/src/' + file
+            var dist = __dirname + '/dist/' + name + '/' + name + parseInt(index + 1) + '.jpg'
+
+            // 重命名并移动
+            fs.rename(src, dist, function(err) {
+                if (err) {
+                    throw err;
+                }
+                console.log('厉害了，白总！重命名并移动成功！');
+            })
+        });
     });
 }
-
-explorer(oldPath);
