@@ -51,7 +51,7 @@ let server = http.createServer((request, response) => {
             response.writeHead(404, {
                 'Content-Type': 'text/plain'
             });
-            res.write('<h1>404 Not Found</h1>');
+            response.write('<h1>404 Not Found</h1>');
             response.write("This request URL " + pathname + " was not found on this server.");
             response.end();
 
@@ -65,7 +65,7 @@ let server = http.createServer((request, response) => {
                     response.writeHead(500, {
                         'Content-Type': 'text/plain'
                     });
-                    res.write('<h1>Internal Server Error</h1>');
+                    response.write('<h1>Sorry, Server Error</h1>');
                     response.end(err);
                 } else {
 
@@ -86,3 +86,4 @@ let server = http.createServer((request, response) => {
 
 server.listen(PORT);
 console.log(`Server runing at port: ${PORT}.`);
+console.log(`http://localhost:${PORT}/index.html`);
