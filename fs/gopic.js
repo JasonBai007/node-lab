@@ -1,4 +1,5 @@
 let fs = require('fs');
+let path = require('path');
 
 // 批量整理图片函数
 let gen_buddle = function(input_name) {
@@ -30,13 +31,19 @@ let gen_buddle = function(input_name) {
             let src = __dirname + '/src/' + file
             let dist = __dirname + '/dist/' + name + '/' + name + parseInt(index + 1) + '.jpg'
 
-            // 重命名并移动
-            fs.rename(src, dist, function(err) {
-                if (err) {
-                    throw err;
-                }
-                console.log(`厉害了！重命名并移动成功 ${index}`);
-            })
+            // 获得当前图片的扩展名
+            let ext = path.extname(src);
+
+            // 如果扩展名不是.gitkeep，就移动，因为这个文件是占位用的，如果没有这个文件，git就不会追踪空的src文件夹
+            if (ext !== '.gitkeep') {
+                // 重命名并移动
+                fs.rename(src, dist, function(err) {
+                    if (err) {
+                        throw err;
+                    }
+                    console.log(`厉害了！重命名并移动成功 ${index}`);
+                })                
+            }
         });
     });
 }
