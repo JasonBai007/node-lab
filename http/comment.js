@@ -1,13 +1,20 @@
-var http = require('http');
+/*
+需要配置的地方：
+postData.mid
+options.headers.Cookie
+options.headers.Referer
+ */
 
-var querystring = require('querystring');
 
-var postData = querystring.stringify({
+let http = require('http');
+let querystring = require('querystring');
+
+const postData = querystring.stringify({
     content:'期待以后的课程',
-    cid:759
+    mid:15152
 });
 
-var options = {
+let options = {
     hostname:'www.imooc.com',
     path:'/course/docomment',
     port: 80,
@@ -19,16 +26,16 @@ var options = {
         'Connection':'keep-alive',
         'Content-Length':postData.length,
         'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
-        'Cookie':'imooc_uuid=10799208-e4f9-46b7-9bed-a6e3ff388849; imooc_isnew_ct=1476343982; loginstate=1; apsid=ljMWVmZTkyODIwZGZhMThmOTE5YzFmZTc3M2I0ZjUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMjYwMTkzMgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABieXlna2NnQDE2My5jb20AAAAAAAAAAAAAAAAAAAAAAGU1OTJlNDhhODNkYmVhNzEzYjY2ZWE3NjI1OWRlMjg5EiUkWBIlJFg%3DMz; last_login_username=byygkcg%40163.com; PHPSESSID=2f616cp36l5ks11cku2n4va656; jwplayer.volume=85; imooc_isnew=2; cvde=5840c4a855e27-28; IMCDNS=0; Hm_lvt_f0cfcccd7b1393990c78efdeebff3968=1480552925,1480571328,1480579142,1480639585; Hm_lpvt_f0cfcccd7b1393990c78efdeebff3968=1480642831',
+        'Cookie':'PHPSESSID=2lt70vrnan9llfecak88914bu0; imooc_uuid=e678cd92-6b0c-487e-b35f-c2f19a2663bf; imooc_isnew=1; imooc_isnew_ct=1497920526; loginstate=1; apsid=ljMWVmZTkyODIwZGZhMThmOTE5YzFmZTc3M2I0ZjUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMjYwMTkzMgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABieXlna2NnQDE2My5jb20AAAAAAAAAAAAAAAAAAAAAADFlN2YxOWY1MjlmMTk2YTk2YmQ4NTA1MmIxZTg5ZGVmEMxIWRDMSFk%3DMz; last_login_username=byygkcg%40163.com; IMCDNS=0; Hm_lvt_f0cfcccd7b1393990c78efdeebff3968=1497920526; Hm_lpvt_f0cfcccd7b1393990c78efdeebff3968=1497943075; cvde=5948740ebe533-67',
         'Host':'www.imooc.com',
         'Origin':'http://www.imooc.com',
-        'Referer':'http://www.imooc.com/comment/759',
+        'Referer':'http://www.imooc.com/video/15152',
         'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
         'X-Requested-With':'XMLHttpRequest'
     }
 }
 
-var req = http.request(options,function(res) {
+let req = http.request(options,function(res) {
     console.log('Status: ' + res.statusCode);
     console.log('headers: ' + JSON.stringify(res.headers));
 
@@ -47,5 +54,4 @@ req.on('error', function(e) {
 })
 
 req.write(postData);
-
 req.end()
